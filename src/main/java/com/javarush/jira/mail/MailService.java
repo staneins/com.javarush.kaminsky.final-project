@@ -27,7 +27,6 @@ import java.util.concurrent.*;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class MailService {
     private static final Locale LOCALE_RU = Locale.forLanguageTag("ru");
     private static final String OK = "OK";
@@ -45,6 +44,15 @@ public class MailService {
 
     @Value("${spring.mail.username}")
     private String email;
+
+    public MailService(MailCaseRepository mailCaseRepository, JavaMailSender javaMailSender, SpringTemplateEngine templateEngine, AppConfig appConfig, AppProperties appProperties, Executor mailExecutor) {
+        this.mailCaseRepository = mailCaseRepository;
+        this.javaMailSender = javaMailSender;
+        this.templateEngine = templateEngine;
+        this.appConfig = appConfig;
+        this.appProperties = appProperties;
+        this.mailExecutor = mailExecutor;
+    }
 
     public static boolean isOk(String result) {
         return OK.equals(result);
