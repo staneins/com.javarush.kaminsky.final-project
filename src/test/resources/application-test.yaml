@@ -12,27 +12,29 @@ spring:
     import: "optional:file:./src/main/resources/secrets_properties"
   init:
     mode: never
+  sql:
+    init:
+      mode: always
+    schema: classpath:data4dev/data-test.sql
   jpa:
     show-sql: true
     open-in-view: false
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+      hibernate:
+        format_sql: { default_batch_fetch_size: 20, jdbc.batch_size: 20 }
 
     # validate db by model
     hibernate:
       ddl-auto: update
 
-    properties:
-      #  http://docs.jboss.org/hibernate/orm/5.3/userguide/html_single/Hibernate_User_Guide.html#configurations
-      hibernate:
-        format_sql: true
-        default_batch_fetch_size: 20
-        # https://stackoverflow.com/questions/21257819/what-is-the-difference-between-hibernate-jdbc-fetch-size-and-hibernate-jdbc-batc
-        jdbc.batch_size: 20
+
   h2:
     console:
       enabled: true
       path: /h2-console
   datasource:
-    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:mem:testdb;NON_KEYWORDS=VALUE
     driver-class-name: org.h2.Driver
     username: sa
     password: password
@@ -82,9 +84,7 @@ spring:
             user-info-uri: https://gitlab.com/api/v4/user
             user-name-attribute: email
 
-  sql:
-    init:
-      mode: always
+
 
   mail:
     properties:

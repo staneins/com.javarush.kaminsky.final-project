@@ -8,15 +8,19 @@ import com.javarush.jira.common.util.JsonUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.Profiles;
 import org.springframework.http.ProblemDetail;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import javax.sql.DataSource;
 import java.util.Map;
 import java.util.concurrent.Executor;
 
@@ -50,6 +54,23 @@ public class AppConfig {
 
     public boolean isTest() {
         return env.acceptsProfiles(Profiles.of("test"));
+    }
+
+    @Bean
+    @Profile("prod")
+    public DataSource prodDataSource(@Value("${spring.datasource.url}") String url,
+                                     @Value("${spring.datasource.username}") String username,
+                                     @Value("${spring.datasource.password}") String password) {
+        return DataSourceBuilder.create().url(url).username(username).password(password).build();
+    }
+
+    @Bean
+    @Profile("test")
+    public DataSource testDataSource(@Value("jdbc:h2:mem:testdb;NON_KEYWORDS=VALUE") String url,
+                                     @Value("sa") String username,
+                                     @Value("password") String password,
+                                     @Value("org.h2.Driver") String driver) {
+        return DataSourceBuilder.create().url(url).username(username).password(password).driverClassName(driver).build();
     }
 
     @Autowired
