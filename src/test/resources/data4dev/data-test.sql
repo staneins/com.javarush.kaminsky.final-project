@@ -1,4 +1,4 @@
----------  users ----------------------
+--------  users ----------------------
 DELETE
 FROM USERS;
 CREATE SEQUENCE USERS_ID_SEQ START WITH 1;
