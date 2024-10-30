@@ -1,24 +1,17 @@
 package com.javarush.jira.profile.internal.web;
 
 import com.javarush.jira.AbstractControllerTest;
-import com.javarush.jira.login.AuthUser;
-import com.javarush.jira.login.User;
 import com.javarush.jira.profile.ProfileTo;
 import com.javarush.jira.profile.internal.ProfileRepository;
 import com.javarush.jira.profile.internal.model.Profile;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.web.bind.support.WebDataBinderFactory;
-import org.springframework.web.context.request.NativeWebRequest;
-import org.springframework.web.method.support.HandlerMethodArgumentResolver;
-import org.springframework.web.method.support.ModelAndViewContainer;
 
 import static com.javarush.jira.common.util.JsonUtil.writeValue;
 import static com.javarush.jira.login.internal.web.UserTestData.*;
